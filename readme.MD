@@ -24,7 +24,8 @@ We only need the following initial configurations on the network devices
 |------------|-----------|
 | R1 | 192.168.99.1 |
 | S1 | 192.168.99.2 |
-| Raspberry Pi | 192.168.99.10 |
+| Debian - Ansible control node| 192.168.99.5 |
+| Developer workstation | 192.168.99.10 |
 
 The GNS3 management network is reachable from the local machine. SSH access has been configured and tested.
 
