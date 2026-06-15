@@ -1,6 +1,8 @@
 name: Validate files and yml syntax
 
-on: [push]
+on:
+  push:
+  workflow_dispatch:
 
 jobs:
   validate:
