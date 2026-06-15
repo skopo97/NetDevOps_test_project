@@ -1,8 +1,8 @@
 ## This is my test project for my upcoming bachelor's thesis
 
-The project is to setup a virtual GNS3 network connected to my local network.
+The project is to setup a virtual GNS3 network connected to my local management network.
 
-This approach allows me to use Ansbile to push new configurations on the network devices.
+This approach allows me to use Ansible to push new configurations on the network devices.
 
 # The topology
 ![Toploogy](Topology.png)
@@ -16,7 +16,7 @@ If the tests pass, Ansible will apply the new configurations to the network devi
 # Device configurations
 We only need the following initial configurations on the network devices
 - IP address
-- SSH accessa
+- SSH access
 
 # IP Table
 
