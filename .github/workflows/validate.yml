@@ -12,7 +12,7 @@ jobs:
 
       - name: Check repo files
         run: |
-          test -f README.md
+          test -f readme.MD
           test -f ansible/ansible.cfg
           test -f ansible/inventory/hosts.yml
           test -f ansible/inventory/group_vars/all.yml
