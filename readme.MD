@@ -81,5 +81,9 @@ Ansible is not able to automatically read them from the file. They have to be ex
 
 The first playbook verifies that Ansible can connect to the network devices and can run commands. The playbook is located at `ansible/playbooks/show_version`
 
-the playbook is run from `ansible` directory:
+the playbook is run from `/ansible` directory:
 `ansible-playbook playbooks/show_version.yml`
+
+Running the playbook shows the `show version` command output in the terminal and succesfully runs on both devices.
+
+![Playbook-test](images/playbook-test.png)
