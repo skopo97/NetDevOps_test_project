@@ -1,0 +1,14 @@
+- name: Test device connectivity
+  hosts: routers:switches
+  gather_facts: false
+
+  tasks:
+    - name: Run show version
+      cisco.ios.ios_command:
+        commands:
+          - show version
+      register: show_version
+
+    - name: Print show version output
+      ansible.builtin.debug:
+        var: show_version.stdout_lines
