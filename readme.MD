@@ -16,7 +16,7 @@ If the tests pass, Ansible will apply the new configurations to the network devi
 # Device configurations
 We only need the following initial configurations on the network devices
 - IP address
-- SSH
+- SSH accessa
 
 # IP Table
 
