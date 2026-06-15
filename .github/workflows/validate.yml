@@ -1,0 +1,40 @@
+name: Validate files and yml syntax
+
+on: [push]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check repo files
+        run: |
+          test -f README.md
+          test -f ansible/ansible.cfg
+          test -f ansible/inventory/hosts.yml
+          test -f ansible/inventory/group_vars/all.yml
+          test -f ansible/playbooks/show_version.yml
+          test -f images/playbook-test.png
+          test -f images/topology.png
+
+      - name: Install Ansible
+        run: |
+          python -m pip install --upgrade pip
+          pip install ansible
+
+      - name: Install Ansible collections
+        run: |
+          ansible-galaxy collection install cisco.ios ansible.netcommon
+
+      - name: Check Ansible inventory
+        working-directory: ansible
+        run: |
+          ansible-inventory --list
+
+      - name: Syntax check playbooks
+        working-directory: ansible
+        run: |
+          ansible-playbook playbooks/show_version.yml --syntax-check
