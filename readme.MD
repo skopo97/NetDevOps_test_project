@@ -103,4 +103,12 @@ Running the playbook shows the `show version` command output in the terminal and
 
 ![Playbook-test](images/playbook-test.png)
 
+## 
+
+ We need to install Ansible and Ansible collections, specifically the cisco.ios and ansible.netcommon.
+
+ `pip install ansible`
+
+ `ansible-galaxy collection install cisco.ios ansible.netcommon`
+
 
