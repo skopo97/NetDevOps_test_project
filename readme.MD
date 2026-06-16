@@ -41,6 +41,7 @@ NAT is enabled by the following command on the workstation.
 Forwarding rules are also required so that traffic can pass between the GNS3 management network and the workstatstion's WAN interface.
 
 `sudo iptables -A FORWARD -i tap0 -o wlp0s20f3 -s 192.168.99.3/32 -j ACCEPT`
+
 `sudo iptables -A FORWARD -i wlp0s20f3 -o tap0 -d 192.168.99.3/32 -m conntrack --ctstate RELATED,RSTABLISHED -j ACCEPT`
 
 The first rule allows the Ansible control node to inititate outbound connections to the internet. 
