@@ -107,7 +107,7 @@ Running the playbook shows the `show version` command output in the terminal and
 
 # Automation control node configuration
 
-First we need to install Ansible and Ansible collections, specifically the cisco.ios and ansible.netcommon.
+The Automation control node requires the installation of Ansible and the necessary network collection. The following are required to interact with Cisco IOS devices:
 
 `pip install ansible-core`
 
@@ -137,7 +137,7 @@ pip install 'pyats[full]'
 A testbed.yaml is used as the inventory for pyATS. It specifies the devices names, types, operating systems, credentials etc. Necessary information for pyATS to initiate SSH connection and run the correct commands on the device.
 This testbed.yaml was manually written, but it is also possible to write a testbed file from ansible inventory for example if it's made already.
 
-```text
+```yaml
 testbed:
  credentials:
    default:
@@ -174,7 +174,7 @@ This requires to create a .env file in the directory with two variables
 
 First we test pyATS connectivity with a Python script. The script connects into R1 and runs the `show version` command on the device and outputs it to the terminal.
 
-```text
+```python
 from pyats.topology import loader
 
 testbed = loader.load('testbed.yaml')
