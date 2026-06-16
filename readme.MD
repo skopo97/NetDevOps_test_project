@@ -1,25 +1,25 @@
-## this is my test project for my upcoming bachelor's thesis
+## This is my test project for my upcoming bachelor's thesis
 
 The project is to set up a virtual GNS3 network bridged to my host client.
 
-this approach allows Ansible to automatically push new valid configurations on the network devices.
+This approach allows Ansible to automatically push new valid configurations on the network devices.
 
-# the topology
+# The topology
 ![topology](images/topology.png)
 
-# basic workflow
+# Basic workflow
 The Ansible control node will run Ansible and monitor a GitHub repository for new commits. when configuration changes are detected, an automated CI/CD pipeline will be triggered. The pipeline will use pyats to test and validate the proposed configuration changes.
 
 If the tests pass, ansible will apply the new configurations to the network devices. if the tests fail, the changes will be rejected.
 
 
-# device configurations
+# Device configurations
 We only need the following initial configurations on the network devices
 - ip address
 - ssh access
 
 
-# ip table
+# IP table
 
 |device | management ip |
 |------------|-----------|
@@ -28,7 +28,7 @@ We only need the following initial configurations on the network devices
 | Debian - ansible control node| 192.168.99.3 |
 | Developer workstation | 192.168.99.10 |
 
-the gns3 management network is reachable from the local machine. ssh access has been configured and tested.
+The GNS3 management network is reachable from the local machine. ssh access has been configured and tested.
 
 # Specific configuration for this project
  
@@ -41,14 +41,15 @@ NAT is enabled by the following command on the workstation.
 Forwarding rules are also required so that traffic can pass between the GNS3 management network and the workstatstion's WAN interface.
 
 `sudo iptables -A FORWARD -i tap0 -o wlp0s20f3 -s 192.168.99.3/32 -j ACCEPT`
+
 `sudo iptables -A FORWARD -i wlp0s20f3 -o tap0 -d 192.168.99.3/32 -m conntrack --ctstate RELATED,RSTABLISHED -j ACCEPT`
 
 The first rule allows the Ansible control node to inititate outbound connections to the internet. 
 The second rules allows return traffic for estalished connections back to the Ansible control node. It does not allow connections to be inititated from the outside network.
 
-Ansible has been configured successfully. The current Ansible configurations allows access to R1 and S1 and run Cisco IOS commands with the 'cisco.ios.ios_command' module.
 
-## Ansible structure
+
+# Ansible structure
 
 ```text
 ansible/
