@@ -167,5 +167,27 @@ devices:
 This requires to create a .env file in the directory with two variables
 `ssh_user=x` and `ssh_pass=x`
 
+## Testing pyATS connectivity
 
+First we test pyATS connectivity with a Pythons script. The script connects into R1 and runs the `show version` command on the device and outputs it to the terminal.
+```text
+from pyats.topology import loader
 
+testbed = loader.load('testbed.yaml')
+device = testbed.devices['R1']
+
+try:
+    device.connect(log_stdout=False)
+    print("Connected")
+    print(device.execute('show version'))
+
+except Exception as e:
+    print(f"Failed: {e}")
+
+finally:
+    if device.connected:
+        device.disconnect()
+```
+![pyATS-test](images/pyats-test.png)
+
+The script succesfully connects to device R1 and runs the 'show version' command. This confirms out connectivity is working.
