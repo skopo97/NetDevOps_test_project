@@ -119,3 +119,52 @@ to automatically fetch the repository and run the required Ansible playbooks whe
  pyATS will be used as part of the validation stage to automate network tests. If the tests pass, the pipeline can proceed with pushing the confugration changes to the managed devices.
 
  `pipx install 'pyats[full]'`
+
+
+# pyATS configuration 
+
+ Create a Python3 virtual environment and activate it and install pyats[full] via pip.
+ ```text
+ python3 -m venv venvname
+ source venvname/bin/activate
+ pip install 'pyats[full]'
+ ```
+## testbed.yaml
+
+ A testbed.yaml is used as the inventory for pyATS. It speficies the devices names, types, operating systems, credentials etc. Neccesary information for pyATS to initiate SSH connection and run the correct commands on the device.
+ This testbed.yaml was manually written, but it is also possbile to write a testbed file from ansible inventory for example if it's made already.
+
+ ```text
+ testbed:
+  credentials:
+    default:
+      username: "%ENV{ssh_user}"
+      password: "%ENV{ssh_pass}"
+
+devices:
+  R1:
+    alias: 'Office router R1'
+    type: 'router'
+    os: 'ios'
+    connections:
+      cli:
+        protocol: ssh
+        ip: 192.168.99.1
+        port: 22
+
+
+  S1:
+    alias: 'Office switch S1'
+    type: 'switch'
+    os: 'ios'
+    connections:
+      cli:
+        protocol: ssh
+        ip: 192.168.99.2
+        port: 22
+ ```
+This requires to create a .env file in the directory with two variables
+`ssh_user=x` and `ssh_pass=x`
+
+
+
