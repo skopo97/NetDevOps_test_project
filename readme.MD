@@ -23,10 +23,10 @@ We only need the following initial configurations on the network devices
 
 |device | management ip |
 |------------|-----------|
-| r1 | 192.168.99.1 |
-| s1 | 192.168.99.2 |
-| debian - ansible control node| 192.168.99.3 |
-| developer workstation | 192.168.99.10 |
+| R1 | 192.168.99.1 |
+| S1 | 192.168.99.2 |
+| Debian - ansible control node| 192.168.99.3 |
+| Developer workstation | 192.168.99.10 |
 
 the gns3 management network is reachable from the local machine. ssh access has been configured and tested.
 
@@ -103,12 +103,19 @@ Running the playbook shows the `show version` command output in the terminal and
 
 ![Playbook-test](images/playbook-test.png)
 
-## 
+# Ansible control node configuration
 
- We need to install Ansible and Ansible collections, specifically the cisco.ios and ansible.netcommon.
+ First we need to install Ansible and Ansible collections, specifically the cisco.ios and ansible.netcommon.
 
- `pip install ansible`
+ `pip install ansible-core`
 
  `ansible-galaxy collection install cisco.ios ansible.netcommon`
 
+Git will also be installed on the Ansible control node so it can retreive the latest playbooks, inventory files and configuration files from the remote repository. A git CI runner will be also installed. It allows the node
+to automatically fetch the repository and run the required Ansible playbooks whenever changes are pushed.
+ 
+ `sudo apt install git`
 
+ pyATS will be used as part of the validation stage to automate network tests. If the tests pass, the pipeline can proceed with pushing the confugration changes to the managed devices.
+
+ `pipx install 'pyats[full]'`
