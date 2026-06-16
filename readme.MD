@@ -10,7 +10,7 @@ This approach allows Ansible to automatically push new valid configurations on t
 
 # Basic workflow
 
-The Automation control node will run Ansible and monitor a GitHub repository for new commits. When configuration changes are detected, an automated CI/CD pipeline will be triggered. The pipeline will use pyATS to test and validate the proposed configuration changes.
+The automation node will run Ansible, pyATS and a CI runner. The CI runnel will receive pipeline jobs when new changes are pushed to the GitHub repository.
 
 If the tests pass, Ansible will apply the new configurations to the network devices. If the tests fail, the changes will be rejected.
 
@@ -32,13 +32,13 @@ We only need the following initial configurations on the network devices
 
 The GNS3 management network is reachable from the local machine. SSH access has been configured and tested.
 
-# Specific configuration for this project
+# Workstation NAT and fowarding configuration
 
 For this project to work, the Automation control node must use the developer workstation as its default gateway. The workstation also needs to perform NAT so that any internet-bound traffic from the Ansible control node is translated and appears to originate from the workstation.
 Internet access is required for the Automation control node so it can interact with the remote Git repository and retrieve the latest configuration changes, Ansible playbooks and inventory.
 
 NAT is enabled by the following command on the workstation.
-`sudo iptables -t nat -A POSTROUTING -s 192.168.99.3/24 -o eth0 -j MASQUERADE`
+`sudo iptables -t nat -A POSTROUTING -s 192.168.99.3/32 -o eth0 -j MASQUERADE`
 
 Forwarding rules are also required so that traffic can pass between the GNS3 management network and the workstation's WAN interface.
 
