@@ -1,36 +1,50 @@
-## This is my test project for my upcoming bachelor's thesis
+## this is my test project for my upcoming bachelor's thesis
 
-The project is to set up a virtual GNS3 network connected to my local management network.
+The project is to set up a virtual GNS3 network bridged to my host client.
 
-This approach allows me to use Ansible to push new configurations on the network devices.
+this approach allows Ansible to automatically push new valid configurations on the network devices.
 
-# The topology
-![Topology](images/topology.png)
+# the topology
+![topology](images/topology.png)
 
-# Basic workflow
-A Raspberry Pi will run Ansible and monitor a GitHub repository for new commits. When configuration changes are detected, an automated CI/CD pipeline will be triggered. The pipeline will use pyATS to test and validate the proposed configuration changes.
+# basic workflow
+The Ansible control node will run Ansible and monitor a GitHub repository for new commits. when configuration changes are detected, an automated CI/CD pipeline will be triggered. The pipeline will use pyats to test and validate the proposed configuration changes.
 
-If the tests pass, Ansible will apply the new configurations to the network devices. If the tests fail, the changes will be rejected.
+If the tests pass, ansible will apply the new configurations to the network devices. if the tests fail, the changes will be rejected.
 
 
-# Device configurations
+# device configurations
 We only need the following initial configurations on the network devices
-- IP address
-- SSH access
+- ip address
+- ssh access
 
-# IP Table
 
-|Device | Management IP |
+# ip table
+
+|device | management ip |
 |------------|-----------|
-| R1 | 192.168.99.1 |
-| S1 | 192.168.99.2 |
-| Debian - Ansible control node| 192.168.99.5 |
-| Developer workstation | 192.168.99.10 |
+| r1 | 192.168.99.1 |
+| s1 | 192.168.99.2 |
+| debian - ansible control node| 192.168.99.3 |
+| developer workstation | 192.168.99.10 |
 
-The GNS3 management network is reachable from the local machine. SSH access has been configured and tested.
+the gns3 management network is reachable from the local machine. ssh access has been configured and tested.
 
-# Ansible configurations
+# Specific configuration for this project
+ 
+For this project to work, the Ansible control node must use the developer workstation as it's default gateway. The workstation also needs to perform NAT so that any internet-bound traffic from the Ansible control node is translated at appears to originate from the workstation.
+Internet access is required for the Ansible control node so it can interact with the remote Git repository and retreive the latest configuration changes, Ansible playbooks and inventory.
 
+NAT is enabled by the following command on the workstation.
+`sudo iptables -t nat -A POSTROUTING -s 192.168.99.3/24 -o eth0 -j MASQUERADE`
+
+Forwarding rules are also required so that traffic can pass between the GNS3 management network and the workstatstion's WAN interface.
+
+`sudo iptables -A FORWARD -i tap0 -o wlp0s20f3 -s 192.168.99.3/32 -j ACCEPT`
+`sudo iptables -A FORWARD -i wlp0s20f3 -o tap0 -d 192.168.99.3/32 -m conntrack --ctstate RELATED,RSTABLISHED -j ACCEPT`
+
+The first rule allows the Ansible control node to inititate outbound connections to the internet. 
+The second rules allows return traffic for estalished connections back to the Ansible control node. It does not allow connections to be inititated from the outside network.
 
 Ansible has been configured successfully. The current Ansible configurations allows access to R1 and S1 and run Cisco IOS commands with the 'cisco.ios.ios_command' module.
 
@@ -88,3 +102,5 @@ the playbook is run from `/ansible` directory:
 Running the playbook shows the `show version` command output in the terminal and succesfully runs on both devices.
 
 ![Playbook-test](images/playbook-test.png)
+
+
