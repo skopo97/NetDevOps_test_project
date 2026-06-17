@@ -87,7 +87,7 @@ ansible/
     └── show_version.yml
 ```
 
-### Inventory
+### Inventory hosts.yml
 
 ```
 all:
