@@ -54,6 +54,8 @@ Forwarding rules are also required so that traffic can pass between the GNS3 man
 
 `sudo iptables -A FORWARD -i wlp0s20f3 -o tap0 -d 192.168.99.3/32 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT`
 
+Where in this case `wlp0s20f3` is the internet facing interface on workstation client and `tap0` is the bridged interface to 'GNS3.
+
 The first rule allows the Automation control node to initiate outbound connections to the internet.
 The second rule allows return traffic for established connections back to the Automation control node. It does not allow connections to be initiated from the outside network.
 
