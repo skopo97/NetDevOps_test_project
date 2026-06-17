@@ -43,7 +43,7 @@ The GNS3 management network is reachable from the local machine. SSH access has 
 # Workstation NAT and forwarding configuration
 
 For this project to work, the Automation control node must use the developer workstation as its default gateway. The workstation also needs to perform NAT so that any internet-bound traffic from the Ansible control node is translated and appears to originate from the workstation.
-Internet access is required for the Automation control node so it can interact with the remote Git repository and retrieve the latest configuration changes, Ansible playbooks and inventory.
+Internet access is required for the Automation control node so it can interact with the remote Git repository and retrieve the latest configuration changes, Ansible playbooks, inventor and pyATS scripts.
 
 NAT is enabled by the following command on the workstation.
 `sudo iptables -t nat -A POSTROUTING -s 192.168.99.3/32 -o eth0 -j MASQUERADE`
