@@ -204,3 +204,9 @@ finally:
 ![pyATS-test](images/pyats-test.png)
 
 The script successfully connects to device R1 and runs the 'show version' command. This confirms that connectivity is working.
+
+# Manual pipeline Testing
+#
+ Before moving to the next logical step in the project. The idea is to first test how the pipeline should work when automated. 
+
+ The first step is to crate a Ansible playbook for configuration changes and to create a pyATS script that validates connectivity.

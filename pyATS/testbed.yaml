@@ -1,0 +1,26 @@
+testbed:
+  credentials:
+    default:
+      username: "%ENV{ssh_user}"
+      password: "%ENV{ssh_pass}"
+
+devices:
+  R1:
+    alias: "Office router R1"
+    type: "router"
+    os: "ios"
+    connections:
+      cli:
+        protocol: ssh
+        ip: 192.168.99.1
+        port: 22
+
+  S1:
+    alias: "Office switch S1"
+    type: "switch"
+    os: "ios"
+    connections:
+      cli:
+        protocol: ssh
+        ip: 192.168.99.2
+        port: 22
